@@ -1,5 +1,8 @@
 MongoDB Job Store for Quartz.NET
 ================================
+This version works on the more recent releases of mongo and quartz. The repositiory is published to nuget for easy referencing.
+
+Thanks @ejlevin1 for providing a fix for the recent mongo/quartz version.
 Thanks to @chrisdrobison for handing over this project.
 
 ## Basic Usage
