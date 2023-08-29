@@ -5,17 +5,22 @@ Thanks to @chrisdrobison for handing over this project.
 ## Basic Usage
 
 ```cs
-var properties = new NameValueCollection();
-properties[StdSchedulerFactory.PropertySchedulerInstanceName] = instanceName;
-properties[StdSchedulerFactory.PropertySchedulerInstanceId] = $"{Environment.MachineName}-{Guid.NewGuid()}";
-properties[StdSchedulerFactory.PropertyJobStoreType] = typeof (MongoDbJobStore).AssemblyQualifiedName;
-// I treat the database in the connection string as the one you want to connect to
-properties[$"{StdSchedulerFactory.PropertyJobStorePrefix}.{StdSchedulerFactory.PropertyDataSourceConnectionString}"] = "mongodb://localhost/quartz";
-// The prefix is optional
-properties[$"{StdSchedulerFactory.PropertyJobStorePrefix}.collectionPrefix"] = "prefix";
+NameValueCollection properties = new NameValueCollection
+{
+    { "quartz.scheduler.instanceName", "Notifications" },
+    { "quartz.threadPool.type", "Quartz.Simpl.SimpleThreadPool, Quartz" },
+    { "quartz.threadPool.threadCount", "5" },
+    { "quartz.threadPool.threadPriority", "Normal" },
+    { "quartz.jobStore.type", "Quartz.Spi.MongoDbJobStore.MongoDbJobStore, Quartz.Spi.MongoDbJobStore" },
+    { "quartz.jobStore.connectionString", "mongodb://localhost:27017/quartz" },
+    { "quartz.jobStore.collectionPrefix", "Q_" },
+    { "quartz.serializer.type", "json" }
+};
 
-var scheduler = new StdSchedulerFactory(properties);
-return scheduler.GetScheduler();
+var schedulerFactory = new StdSchedulerFactory(properties);
+var scheduler = await schedulerFactory.GetScheduler();
+
+await scheduler.Start();
 ```
 
 ## Nuget
