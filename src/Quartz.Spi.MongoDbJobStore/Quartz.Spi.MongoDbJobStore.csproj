@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>TimeTell.Quartz.Spi.MongoDbJobStore</AssemblyName>
     <IsPackable>true</IsPackable>
+	<VersionPrefix Condition="'$(VersionPrefix)' == ''">$(AssemblyVersion)</VersionPrefix>
     <Version>$(VersionPrefix)$(VersionSuffix)</Version>
     <Authors>TimeTell BV</Authors>
     <Company>TimeTell BV</Company>
